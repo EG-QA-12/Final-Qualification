@@ -65,51 +65,43 @@ BODY: [{"id":131920052,"quantity":500}]
 URL: {{Base_url}}/product
 BODY: {"id":1111111,"adData":{"item_list_name":"product-page"}}
 ```
-## Подключенные зависимости: 
-
-```
-Selenium,
-Requests,
-Pytest,
-Allure,
-```
-
 ## Структура Проекта:
-
-### Запуск UI тестов
 ```
-pytest .\Tests\test_ui.py
-
-```
-
-### Запуск API тестов
-```
-pytest .\Tests\test_api.py
-
-```
-
-### Запуск всех тестов
-```
-pytest
-```
-
-### Запуск тестов с отчетами allure
-```
-pytest --alluredir=./Tests/allure_report
+Final-Qualification/
+├── Tests/
+│   ├── test_api.py
+│   ├── test_api_playwright.py
+│   ├── test_ui.py
+│   ├── test_ui_playwright.py
+│   ├── conftest.py
+│   ├── services/
+│   ├── pages/
+│   └── utils/
+├── .env
+├── .gitignore
+├── pytest.ini
+├── requirements.txt
+└── README.md
 ```
 
-### Просмотр тестов
-```
-allure serve .\Tests\allure_report\
+## Переменные окружения
+Секреты хранятся в `.env` (файл не коммитится в Git).
+- `CHITAI_GOROD_API_TOKEN` — Bearer-токен API
+- `CHITAI_GOROD_USER_ID` — ID пользователя
+- `CHITAI_GOROD_COOKIES` — cookies для UI
+- `CHITAI_GOROD_API_URL` — базовый URL API
+- `CHITAI_GOROD_UI_URL` — базовый URL сайта
+
+## Запуск тестов
+```powershell
+pytest                    # все тесты
+pytest -m ui              # только UI
+pytest -m api             # только API
+pytest -m smoke           # smoke
 ```
 
-### Установка сервера allure на windows
-```
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-irm get.scoop.sh | iex
-scoop install allure
-```
-***проверка версии allure***
-```
-allure --version
+## Allure-отчёты
+```powershell
+pytest --alluredir=allure-results
+allure serve allure-results
 ```
